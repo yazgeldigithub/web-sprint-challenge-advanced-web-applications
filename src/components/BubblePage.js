@@ -15,21 +15,29 @@ const BubblePage = () => {
   };
 
   const saveEdit = (editColor) => {
+    editColorService(editColor);
   };
 
   const deleteColor = (colorToDelete) => {
+    deleteColorService(colorToDelete.id);
   };
+  
+  useEffect(() => {
+    toggleEdit(true);
+    fetchColorService(setColors);
+    toggleEdit(false);
+  }, [])
 
   return (
     <div className="container">
-      <ColorList colors={colors} editing={editing} toggleEdit={toggleEdit} saveEdit={saveEdit} deleteColor={deleteColor}/>
-      <Bubbles colors={colors}/>
+      {colors && <ColorList colors={colors} editing={editing} toggleEdit={toggleEdit} saveEdit={saveEdit} deleteColor={deleteColor} /> }
+      {colors &&  <Bubbles colors={colors}/> }
+      {!colors && <p>Colors not detected.</p>}
     </div>
   );
 };
 
 export default BubblePage;
-
 //Task List:
 //1. When the component mounts, make an axios call to retrieve all color data and push to state.
 //2. Complete saveEdit, deleteColor functions
